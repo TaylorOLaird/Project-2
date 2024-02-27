@@ -6,6 +6,8 @@ using Interfaces;
 public class ShurikenBehavior : MonoBehaviour
 {
     public GameObject shurikenPrefab;
+    
+    private int shurikenDamageValue = 5;
 
     
     // Start is called before the first frame update
@@ -24,9 +26,11 @@ public class ShurikenBehavior : MonoBehaviour
     // Shuriken trigger event
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<IEnemy>() != null)
+        // check if we successfully get a non-null IEnemy component and set local var enemy to that value so
+        // we do not need to call GetComponent again
+        if (other.gameObject.GetComponent<IEnemy>() is { } enemy)
         {
-            other.gameObject.GetComponent<IEnemy>()?.TakeDamage(shurikenDamageValue);
+            enemy.TakeDamage(shurikenDamageValue);
         }
     }
 }
