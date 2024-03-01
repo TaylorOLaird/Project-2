@@ -46,14 +46,13 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         // GameObject obj = null;
         
         // Set obj based on selection technique used
+
+        /*if (grapplingHookEquiped)
+        {
+            grapplingHook.SetActive(true);
+            grapplingHook.GetComponent<GrapplingHookBehavior>().grapplingHookEnabled = true;
+        }*/
         
-        // if (obj != null && selectButtonPressed)
-        // Alternatively: move scripting to grappling hook
-        // Have it determine object and when a button is pressed by user
-        // Call GrapplingHook.Select();
-        // Use the selection code within xr toolkit?
-        
-        // Select(obj);
 
         if (fireShurikenTrigger)
         {
