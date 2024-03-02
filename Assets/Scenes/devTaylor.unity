@@ -1244,6 +1244,7 @@ GameObject:
   - component: {fileID: 389330126}
   - component: {fileID: 389330127}
   - component: {fileID: 389330128}
+  - component: {fileID: 389330129}
   m_Layer: 0
   m_Name: XR Origin (XR Rig)
   m_TagString: Untagged
@@ -1528,6 +1529,20 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &389330129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389330117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b0b7d6d21111d41af9423adf85cc67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlyButton: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  objectReference: {fileID: 1374350365}
 --- !u!1 &411113500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,7 +2187,7 @@ GameObject:
   - component: {fileID: 1074972434}
   - component: {fileID: 1074972433}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4373,7 +4388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1950569934
 Transform:
   m_ObjectHideFlags: 0
