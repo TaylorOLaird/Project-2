@@ -26,6 +26,8 @@ public class EnergyBar : MonoBehaviour
     // death sound
     public AudioClip deathSound;
 
+    private bool deathSoundStart = false;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,10 +67,11 @@ public class EnergyBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentEnergy <= 0.03 * maxEnergy)
+        if (currentEnergy <= 0.03 * maxEnergy && !deathSoundStart)
         {
             // play the death sound
             GetComponent<AudioSource>().PlayOneShot(deathSound);
+            deathSoundStart = true;
         }
         if (currentEnergy <= 0)
         {
