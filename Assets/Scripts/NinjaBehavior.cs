@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Ninja Can Jump and Duck objects in env while navigating
@@ -17,23 +16,32 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     public GameObject grapplingHook;
     public GameObject shurikenPrefab;
     public Transform fireLocation;
+    public GameObject moldPower;
+    private IEnergyBar energyBar;
 
     // Num of shuriken ninja has -> set public to be able to edit in unity
     public int shurikenCount;
-    
-    // Expose this to an energy display game component
-    public int energy;
+
+    public UnityEvent GameOverEvent { get; private set; } = new UnityEvent();
     
     
     private float shurikenSpeed = 5.0F;
 
     // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
     private bool fireShurikenTrigger = false;
-    
+    // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
+    private bool moldVoicePromptRecognized = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        moldPower.SetActive(false);
+        if (GameOverEvent == null)
+        {
+            GameOverEvent = new UnityEvent();
+        }
+
+        energyBar = gameObject.GetComponent<IEnergyBar>();
     }
 
     // Update is called once per frame
@@ -42,23 +50,26 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         // GameObject obj = null;
         
         // Set obj based on selection technique used
-        
-        // if (obj != null && selectButtonPressed)
-        // Alternatively: move scripting to grappling hook
-        // Have it determine object and when a button is pressed by user
-        // Call GrapplingHook.Select();
-        // Use the selection code within xr toolkit?
-        
-        // Select(obj);
+
+        /*if (grapplingHookEquiped)
+        {
+            grapplingHook.SetActive(true);
+            grapplingHook.GetComponent<GrapplingHookBehavior>().grapplingHookEnabled = true;
+        }*/
 
         if (fireShurikenTrigger)
         {
             FireShuriken();
         }
 
-        if (Energy <= 0)
+        if (moldVoicePromptRecognized)
         {
-            //Game Over
+            ActivateMoldPower(); //alternative method for this exists if not pleased with this behavior
+        }
+
+        if (Energy <= 0f)
+        {
+            OnGameOver();
         }
     }
 
@@ -89,30 +100,30 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         shurikenCount--;
     }
 
-    /// <summary>
-    /// Either Ninja needs collider that triggers on collision with collectible
-    /// OR publicly accessible method for energy provider to trigger
-    /// </summary>
-    /// <param name="collectible">Collectible Energy provider ninja picked up (cookie/cake)</param>
-    private void GainEnergy(IEnergyProvider collectible)
-    {
-        Energy += collectible.EnergyValue;
-    }
-
-    public void GainEnergy(int energyValue)
-    {
-        Energy += energyValue;
-    }
-
     public void TakeDamage(int attackValue)
     {
-        Energy -= attackValue;
+        energyBar.TakeDamage(attackValue);
     }
 
-    public int Energy
+    public float Energy
     {
-        get => energy;
-        private set => energy = value;
+        get => energyBar?.CurrentEnergy ?? 0f;
+    }
+
+    public void ActivateMoldPower()
+    {
+        moldPower.SetActive(true);
+        Invoke(nameof(DisableMoldPower), 2f);
+    }
+    
+    private void OnGameOver()
+    {
+        GameOverEvent?.Invoke();
+    }
+
+    private void DisableMoldPower()
+    {
+        moldPower.SetActive(false);
     }
 }
 

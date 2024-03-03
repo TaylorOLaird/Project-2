@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
+using UnityEditorInternal;
 using UnityEngine;
 
-public class EnergyBar : MonoBehaviour
+public class EnergyBar : MonoBehaviour, IEnergyBar
 {
     public GameObject enegeryCube;
     public float maxEnergy = 100f;
     public float drainRate = 1f;
     private float currentEnergy;
+
+    public float CurrentEnergy { get => currentEnergy; }
+    public void TakeDamage(float dmg)
+    {
+        currentEnergy -= dmg;
+    }
 
     public List<GameObject> cakes = new List<GameObject>();
 
