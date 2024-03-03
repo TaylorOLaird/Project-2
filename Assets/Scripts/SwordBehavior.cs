@@ -52,7 +52,7 @@ public class SwordBehavior : MonoBehaviour
     /// </summary>
     private static void Slash(IEnemy enemy)
     {
-        enemy.TakeDamage(SlashDamage);
+        enemy.Slash(SlashDamage);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ public class SwordBehavior : MonoBehaviour
     {
         //should we have a stab and slash method for enemies to make certain
         //fruits better defeated by certain attacks
-        enemy.TakeDamage(StabDamage);
+        enemy.Stab(StabDamage);
     }
     
     /// <summary>

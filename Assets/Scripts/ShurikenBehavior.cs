@@ -30,7 +30,7 @@ public class ShurikenBehavior : MonoBehaviour
         // we do not need to call GetComponent again
         if (other.gameObject.GetComponent<IEnemy>() is { } enemy)
         {
-            enemy.TakeDamage(shurikenDamageValue);
+            enemy.ShurikenHit(shurikenDamageValue);
         }
     }
 }
