@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Ninja Can Jump and Duck objects in env while navigating
@@ -19,12 +17,12 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     public GameObject shurikenPrefab;
     public Transform fireLocation;
     public GameObject moldPower;
+    private IEnergyBar energyBar;
 
     // Num of shuriken ninja has -> set public to be able to edit in unity
     public int shurikenCount;
-    
-    // Expose this to an energy display game component
-    public int energy;
+
+    public UnityEvent GameOverEvent { get; private set; } = new UnityEvent();
     
     
     private float shurikenSpeed = 5.0F;
@@ -33,11 +31,17 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     private bool fireShurikenTrigger = false;
     // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
     private bool moldVoicePromptRecognized = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         moldPower.SetActive(false);
+        if (GameOverEvent == null)
+        {
+            GameOverEvent = new UnityEvent();
+        }
+
+        energyBar = gameObject.GetComponent<IEnergyBar>();
     }
 
     // Update is called once per frame
@@ -63,9 +67,9 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
             ActivateMoldPower(); //alternative method for this exists if not pleased with this behavior
         }
 
-        if (Energy <= 0)
+        if (Energy <= 0f)
         {
-            //Game Over
+            OnGameOver();
         }
     }
 
@@ -96,36 +100,25 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         shurikenCount--;
     }
 
-    /// <summary>
-    /// Either Ninja needs collider that triggers on collision with collectible
-    /// OR publicly accessible method for energy provider to trigger
-    /// </summary>
-    /// <param name="collectible">Collectible Energy provider ninja picked up (cookie/cake)</param>
-    private void GainEnergy(IEnergyProvider collectible)
-    {
-        Energy += collectible.EnergyValue;
-    }
-
-    public void GainEnergy(int energyValue)
-    {
-        Energy += energyValue;
-    }
-
     public void TakeDamage(int attackValue)
     {
-        Energy -= attackValue;
+        energyBar.TakeDamage(attackValue);
     }
 
-    public int Energy
+    public float Energy
     {
-        get => energy;
-        private set => energy = value;
+        get => energyBar?.CurrentEnergy ?? 0f;
     }
 
     public void ActivateMoldPower()
     {
         moldPower.SetActive(true);
         Invoke(nameof(DisableMoldPower), 2f);
+    }
+    
+    private void OnGameOver()
+    {
+        GameOverEvent?.Invoke();
     }
 
     private void DisableMoldPower()
