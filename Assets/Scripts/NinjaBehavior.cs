@@ -52,7 +52,6 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
             grapplingHook.SetActive(true);
             grapplingHook.GetComponent<GrapplingHookBehavior>().grapplingHookEnabled = true;
         }*/
-        
 
         if (fireShurikenTrigger)
         {

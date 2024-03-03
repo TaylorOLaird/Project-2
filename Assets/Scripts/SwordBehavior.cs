@@ -8,7 +8,6 @@ using UnityEngine.UIElements;
 
 public class SwordBehavior : MonoBehaviour
 {
-
     private const int SlashDamage = 10;
 
     private const int StabDamage = 5;

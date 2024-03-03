@@ -95,7 +95,6 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
             _line.SetPosition(1, hand.position + hand.forward * grapplingHookRange);
         }
     }
-    
     /// <summary>
     /// Confirm selection
     /// </summary>
@@ -106,7 +105,6 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
         if (_selectedFruit is not null) return false;
         if (!fruit.Select(this)) return false;
         _selectedFruit = fruit;
-        
 
         return true;
     }
@@ -120,7 +118,7 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
     {
         return transform;
     }
-
+    
     /// <summary>
     /// Throw the fruit - the throw method on the fruit can maybe calculate dmg
     /// to do to the fruit or something or just used for repositioning enemies
