@@ -2,7 +2,7 @@
 {
     public interface IGrabbable
     {
-        bool Select();
+        bool Select(IGrabber parent);
         bool Throw();
     }
 }

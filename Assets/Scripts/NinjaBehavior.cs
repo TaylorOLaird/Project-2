@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +18,7 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     public GameObject grapplingHook;
     public GameObject shurikenPrefab;
     public Transform fireLocation;
+    public GameObject moldPower;
 
     // Num of shuriken ninja has -> set public to be able to edit in unity
     public int shurikenCount;
@@ -29,11 +31,13 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
 
     // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
     private bool fireShurikenTrigger = false;
+    // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
+    private bool moldVoicePromptRecognized = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        moldPower.SetActive(false);
     }
 
     // Update is called once per frame
@@ -42,18 +46,21 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         // GameObject obj = null;
         
         // Set obj based on selection technique used
-        
-        // if (obj != null && selectButtonPressed)
-        // Alternatively: move scripting to grappling hook
-        // Have it determine object and when a button is pressed by user
-        // Call GrapplingHook.Select();
-        // Use the selection code within xr toolkit?
-        
-        // Select(obj);
+
+        /*if (grapplingHookEquiped)
+        {
+            grapplingHook.SetActive(true);
+            grapplingHook.GetComponent<GrapplingHookBehavior>().grapplingHookEnabled = true;
+        }*/
 
         if (fireShurikenTrigger)
         {
             FireShuriken();
+        }
+
+        if (moldVoicePromptRecognized)
+        {
+            ActivateMoldPower(); //alternative method for this exists if not pleased with this behavior
         }
 
         if (Energy <= 0)
@@ -113,6 +120,17 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     {
         get => energy;
         private set => energy = value;
+    }
+
+    public void ActivateMoldPower()
+    {
+        moldPower.SetActive(true);
+        Invoke(nameof(DisableMoldPower), 2f);
+    }
+
+    private void DisableMoldPower()
+    {
+        moldPower.SetActive(false);
     }
 }
 

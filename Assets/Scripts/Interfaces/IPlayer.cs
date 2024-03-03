@@ -6,5 +6,7 @@
         void TakeDamage(int attackValue);
         
         int Energy { get; }
+
+        void ActivateMoldPower();
     }
 }
