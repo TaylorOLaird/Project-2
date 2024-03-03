@@ -69,14 +69,9 @@ public class SwordBehavior : MonoBehaviour
     /// Parry to block an enemy attack
     /// </summary>
     /// <param name="enemy"></param>
-    private void Parry()
+    private void Parry(IEnemy enemy)
     {
-        //Should we instead just set a state on the player --- this would protect from all attacks regardless
-        //of hitting sword though
-        
-        //Should instead figure out how the fruit attacks
-        //If all melee can just check if collides with enemy
-        //If some use projectiles then we will need to check if colliding with enemy or enemy projectile
+        enemy.Parry();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -115,7 +110,7 @@ public class SwordBehavior : MonoBehaviour
             
             if (isSlashing) Slash(enemy);
             else if (isStabbing) Stab(enemy);
-            else if (isParrying) Parry(); //melee attack
+            else if (isParrying) Parry(enemy); //melee attack
         }
         // else if (other.CompareTag("EnemyAttack"))
         // {

@@ -8,6 +8,10 @@
 
         int ShurikenHit(int dmg);
 
+        void Parry();
+
         void Mold();
+        
+        bool PlayerDetected { get; set; }
     }
 }

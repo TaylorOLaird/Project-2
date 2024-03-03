@@ -35,7 +35,6 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     public float _knockoutTimer = 0;
 
     public bool gameOver;
-    private bool playerDetected;
     public bool moldy;
     public bool parried;
     public bool hasAttacked;
@@ -106,7 +105,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
             // Update the timer
             timer -= Time.deltaTime;
 
-            if (playerDetected) //likely want to move this logic to the collision w player
+            if (PlayerDetected) //likely want to move this logic to the collision w player
             {
                 //knock back from player and continue moving towards the player to attack again
                 hasAttacked = true;
@@ -162,7 +161,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     {
         if (hasAttacked) return; //wait for attackDelay before approaching to attack again
         
-        if (playerDetected) SetTargetPoint();
+        if (PlayerDetected) SetTargetPoint();
         // Check for collisions with terrain and stop movement in the direction of collision
         RaycastHit hit;
         
@@ -189,7 +188,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
 
     private void SetTargetPoint()
     {
-        if (playerDetected) targetPoint = player.transform;
+        if (PlayerDetected) targetPoint = player.transform;
         else
         {
             int newWaypointIdx = 0;
@@ -258,6 +257,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         moldy = true;
     }
 
+    public bool PlayerDetected { get; set; }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (Selected) return;
@@ -273,6 +274,7 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
             if (hasAttacked) return;
             
             p.TakeDamage(FruitDamage);
+            hasAttacked = true;
         }
     }
 }
