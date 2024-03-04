@@ -1,6 +1,7 @@
 using Interfaces;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Ninja Can Jump and Duck objects in env while navigating
@@ -13,7 +14,6 @@ using UnityEngine.Events;
 
 public class NinjaBehavior : MonoBehaviour, IPlayer
 {
-    public GameObject grapplingHook;
     public GameObject shurikenPrefab;
     public Transform fireLocation;
     public GameObject moldPower;
@@ -23,12 +23,13 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     public int shurikenCount;
 
     public UnityEvent GameOverEvent { get; private set; } = new UnityEvent();
-    
+    public bool shurikenActive = true;
+    public InputActionProperty fireButton;
+    public InputActionProperty moldButton;
+
     
     private float shurikenSpeed = 5.0F;
 
-    // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
-    private bool fireShurikenTrigger = false;
     // Temp Var so code compiles replace with expr to determine whether we should fire shurriken
     private bool moldVoicePromptRecognized = false;
 
@@ -47,22 +48,12 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     // Update is called once per frame
     void Update()
     {
-        // GameObject obj = null;
-        
-        // Set obj based on selection technique used
-
-        /*if (grapplingHookEquiped)
-        {
-            grapplingHook.SetActive(true);
-            grapplingHook.GetComponent<GrapplingHookBehavior>().grapplingHookEnabled = true;
-        }*/
-
-        if (fireShurikenTrigger)
+        if (shurikenActive && fireButton.action.triggered)
         {
             FireShuriken();
         }
 
-        if (moldVoicePromptRecognized)
+        if (moldButton.action.triggered)
         {
             ActivateMoldPower(); //alternative method for this exists if not pleased with this behavior
         }
@@ -73,17 +64,6 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         }
     }
 
-    private bool Select(GameObject other)
-    {
-        IGrabbable grabbable = other.GetComponent<IGrabbable>();
-
-        if (grabbable is null) return false;
-
-        grapplingHook.GetComponent<GrapplingHookBehavior>().Grab(grabbable);
-        
-        return true;
-    }
-    
     // When activated trigger the fire method -- now just need to figure out the activation
     // Optionally can do a tool-belt like behavior where user reaches down and presses trigger to grab a shuriken
     // (and this adds to hand instead of firing)
@@ -92,7 +72,7 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
     {
         if (shurikenCount <= 0) return; //early return if no shuriken left to fire
         
-        GameObject shuriken = Instantiate(shurikenPrefab, fireLocation.position, Quaternion.identity);
+        GameObject shuriken = Instantiate(shurikenPrefab, fireLocation.position, fireLocation.rotation);
         
         // Set the velocity of the laser
         shuriken.GetComponent<Rigidbody>().velocity = shuriken.transform.forward * shurikenSpeed;
@@ -100,7 +80,7 @@ public class NinjaBehavior : MonoBehaviour, IPlayer
         shurikenCount--;
     }
 
-    public void TakeDamage(int attackValue)
+    public void TakeDamage(float attackValue)
     {
         energyBar.TakeDamage(attackValue);
     }

@@ -22,13 +22,12 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     private bool hasReachedTarget = false; // Flag to track if the enemy has reached the target point
     private float timer;
     public Transform targetPoint;
-    private Transform spawnPoint;
     private Rigidbody rb;
     protected float MoveSpeed = 5f; // Speed at which the enemy moves
     protected float KnockbackDistance = 2f;
     protected float AttackInterval = 5f;
     private float attackTimer = 0f;
-    protected int FruitDamage = 5;
+    protected float FruitDamage = 0.05f;
 
     public List<Transform> waypoints = new List<Transform>();
     
@@ -139,8 +138,8 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
     public virtual bool Select(IGrabber parent)
     {
         if (Selected) return false;
-        
-        transform.SetParent(parent.GetTransform());
+
+        transform.SetParent(parent.GetTransform(), true);
 
         _grabbingObject = parent;
         
@@ -152,28 +151,12 @@ public abstract class EnemyBase : MonoBehaviour, IEnemy
         gameOver = true;
     }
 
-    private void SpawnEnemy()
-    {
-        transform.position = spawnPoint.position;
-    }
-
     private void MoveEnemy()
     {
         if (hasAttacked) return; //wait for attackDelay before approaching to attack again
         
         if (PlayerDetected) SetTargetPoint();
-        // Check for collisions with terrain and stop movement in the direction of collision
-        RaycastHit hit;
-        
-        if (Physics.Raycast(transform.position, directionToTarget, out hit, 1f))
-        {
-            if (hit.collider.gameObject.CompareTag("Terrain"))
-            {
-                // what to do if collide with terrain
-                // 1 update directionToTarget and 2 navigate around obst somehow
-            }
-        }
-        
+      
         // Move towards the target point - not sure how to use physics and if that solves collisions issues
         transform.position = Vector3.MoveTowards(transform.position, targetPoint.position,
             MoveSpeed * Time.deltaTime);

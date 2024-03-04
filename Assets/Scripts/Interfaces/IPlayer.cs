@@ -3,7 +3,7 @@ namespace Interfaces
 {
     public interface IPlayer
     {
-        void TakeDamage(int attackValue);
+        void TakeDamage(float damageValue);
         
         float Energy { get; }
 

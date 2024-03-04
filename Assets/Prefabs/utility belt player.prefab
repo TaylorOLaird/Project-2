@@ -807,7 +807,7 @@ GameObject:
   - component: {fileID: 6722274979218385269}
   - component: {fileID: 2110572997781576029}
   - component: {fileID: 144968474862275707}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: utility belt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1117,8 +1117,9 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  item1: {fileID: 2071764100092509551}
-  item2: {fileID: 5907359081859235224}
+  GrapplingHook: {fileID: 2071764100092509551}
+  Shuriken: {fileID: 5907359081859235224}
+  player: {fileID: 4569809551646365665}
 --- !u!54 &144968474862275707
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2315,11 +2316,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b345b460530b3dc45ab0c937a3797552, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grapplingHook: {fileID: 0}
   shurikenPrefab: {fileID: 5907359081859235224}
-  fireLocation: {fileID: 0}
+  fireLocation: {fileID: 2562949174000424267}
   moldPower: {fileID: 8250584930385474593}
-  shurikenCount: 0
+  shurikenCount: 10
+  shurikenActive: 1
+  fireButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Fire Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: e3cb3b93-160d-4d25-92e3-a4f7b9a900db
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -6879185469970889449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  moldButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Mold Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: d5ac8e5f-aa1f-429c-b2f8-0929b0d2aa5d
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -1262047732288980828, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &5039397179982237766
 GameObject:
   m_ObjectHideFlags: 0
@@ -3376,7 +3401,7 @@ MonoBehaviour:
   m_GravityApplicationMode: 1
   m_ForwardSource: {fileID: 4274001425647987573}
   m_LeftHandMoveAction:
-    m_UseReference: 1
+    m_UseReference: 0
     m_Action:
       m_Name: Left Hand Move
       m_Type: 0
@@ -3601,6 +3626,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpButton: {fileID: 6558622148059887818, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   jumpDuration: 3
+--- !u!1001 &950325792687830472
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4666194679613816930}
+    m_Modifications:
+    - target: {fileID: 6826804441973653509, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_Name
+      value: NinjaSword
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0366
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0211
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.3799282
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.3799282
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.59636784
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.59636784
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+--- !u!4 &8867074992877783017 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8520267319416877601, guid: 2b125b9f79efa9348a9fd025bba31f45, type: 3}
+  m_PrefabInstance: {fileID: 950325792687830472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1020227739235481072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3655,7 +3742,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5686134208185136530, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8867074992877783017}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5686134208185362930, guid: 1fd3a7c43c8190f4d8c167ebde694364, type: 3}
       insertIndex: -1
@@ -3853,6 +3943,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2530062680166097529, guid: 876a9efcae3245e4ab66feeb8f437976, type: 3}
+      propertyPath: layersToHit.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530062680166097529, guid: 876a9efcae3245e4ab66feeb8f437976, type: 3}
+      propertyPath: grabAction.m_Reference
+      value: 
+      objectReference: {fileID: -6879185469970889449, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3998,7 +4096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 109434732395284509, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 109434732395451517, guid: 65847589f926b734d9eaed6e25f0046b, type: 3}
       propertyPath: m_LocalPosition.x

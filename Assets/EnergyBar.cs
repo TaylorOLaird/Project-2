@@ -81,12 +81,14 @@ public class EnergyBar : MonoBehaviour, IEnergyBar
             GetComponent<AudioSource>().PlayOneShot(deathSound);
             deathSoundStart = true;
         }
+
         if (currentEnergy <= 0)
         {
             // Debug.Log("You are out of energy!");
             // If the current energy is less than or equal to 0, destroy the player
-            Destroy(player);
+            UnityEditor.EditorApplication.isPlaying = false;
         }
+
         currentEnergy = currentEnergy - (drainRate / 100);
         // Debug.Log("Current energy: " + currentEnergy);
         // set the x scale of the energy cube to the current energy, without changing the y and z scales

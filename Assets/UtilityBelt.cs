@@ -1,26 +1,37 @@
+using System;
+using Interfaces;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine;
 
 public class UtilityBelt : XRBaseInteractable
 {
     // refrence to the two items you can hold
-    public GameObject item1;
-    public GameObject item2;
+    public GameObject GrapplingHook;
+    public GameObject Shuriken;
+    public NinjaBehavior player;
+    private GrapplingHookBehavior _grappleHook;
+    private void Start()
+    {
+        _grappleHook = GrapplingHook.GetComponent<GrapplingHookBehavior>();
+        GrapplingHook.SetActive(false);
+    }
 
     // function to switch between the two items
     public void SwitchItems()
     {
         // if item1 is active, deactivate it and activate item2
-        if (item1.activeSelf)
+        if (GrapplingHook.activeSelf && !_grappleHook.HasFruitSelected)
         {
-            item1.SetActive(false);
-            item2.SetActive(true);
+            GrapplingHook.SetActive(false);
+            Shuriken.SetActive(true);
+            player.shurikenActive = true;
         }
         // if item2 is active, deactivate it and activate item1
-        else if (item2.activeSelf)
+        else if (Shuriken.activeSelf)
         {
-            item2.SetActive(false);
-            item1.SetActive(true);
+            Shuriken.SetActive(false);
+            GrapplingHook.SetActive(true);
+            player.shurikenActive = false;
         }
     }
 }

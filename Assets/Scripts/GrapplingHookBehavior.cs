@@ -18,12 +18,14 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
     public float grapplingHookRange = 30f;
     public Transform hand;
     
+    public bool HasFruitSelected => _selectedFruit is not null;
+
     public InputActionProperty grabAction;
     public InputActionProperty translateAction;
 
     private const float TranslationScale = 0.1f;
 
-    private const float ProximityLimit = 0.2f;
+    private const float ProximityLimit = 0.5f;
     
     // Start is called before the first frame update
     void Start()
@@ -84,7 +86,7 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
             _line.SetPosition(1, position);
             
             // check if throw button pressed
-            if (grabAction.action.ReadValue<float>() > 0.5f)
+            if (grabAction.action.triggered)
             {
                 Throw();
             }
@@ -99,7 +101,7 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
             _line.SetPosition(1, hit.point);
             
             IGrabbable enemy = hit.collider.GameObject().GetComponent<IGrabbable>();
-            if (enemy is not null && grabAction.action.ReadValue<float>() > 0.5f) Grab(enemy);
+            if (enemy is not null && grabAction.action.triggered) Grab(enemy);
         }
         else
         {

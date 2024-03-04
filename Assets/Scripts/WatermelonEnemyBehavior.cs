@@ -6,5 +6,10 @@ using UnityEngine;
 
 public class WatermelonEnemyBehavior : EnemyBase
 {
-    
+    protected override void Update()
+    {
+        base.Update();
+
+        MoveSpeed = 0f;
+    }
 }
