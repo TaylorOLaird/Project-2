@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
@@ -28,6 +29,16 @@ public class GrapplingHookBehavior : MonoBehaviour, IGrabber
     void Start()
     {
         _line = GetComponent<LineRenderer>();
+    }
+
+    private void OnEnable()
+    {
+        grapplingHookEnabled = true;
+    }
+
+    private void OnDisable()
+    {
+        grapplingHookEnabled = false;
     }
 
     // Update is called once per frame
